@@ -8,13 +8,12 @@
     // "width": 1280, // Waybar width
     // "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
-    "modules-left": ["custom/archmenu", "group/gcpu", "group/fan", "memory", "disk"],
+    "modules-left": ["group/group-power", "group/gcpu", "group/group-fan", "memory", "disk"],
     "modules-center": ["hyprland/workspaces"],
     "modules-right": [
-        "mpd",
+        "mpris",
         "network",
         "bluetooth",
-        "mpd",
         "group/audio",
         "power-profiles-daemon",
         "backlight",
@@ -24,9 +23,38 @@
     ],
 
     // Left Modules
+    "group/group-power": {
+        "orientation": "horizontal",
+        "drawer": {
+            "transition-duration": 500,
+            "children-class": "not-power",
+            "transition-left-to-right": true
+        },
+        "modules": ["custom/archmenu", "custom/power", "custom/reboot", "custom/quit", "custom/lock"]
+    },
     "custom/archmenu": {
         "format": "󰣇",
         "tooltip": false
+    },
+    "custom/quit": {
+        "format": " 󰈆 ",
+        "tooltip": false,
+        "on-click": "hyprctl dispatch exit"
+    },
+    "custom/lock": {
+        "format": "  ",
+        "tooltip": false,
+        "on-click": "hyprlock"
+    },
+    "custom/reboot": {
+        "format": "  ",
+        "tooltip": false,
+        "on-click": "systemctl reboot"
+    },
+    "custom/power": {
+        "format": "  ",
+        "tooltip": false,
+        "on-click": "systemctl poweroff"
     },
 
     "group/gcpu": {
@@ -47,9 +75,19 @@
         "interval": 10
     },
 
+    "group/group-fan": {
+        "orientation": "horizontal",
+        "drawer": {
+            "transition-duration": 500,
+            "children-class": "not-power",
+            "transition-left-to-right": true
+        },
+        "modules": ["group/fan", "custom/power-profile"],
+    },
     "group/fan": {
         "orientation": "horizontal",
-        "modules": ["custom/cpufan", "custom/midfan", "custom/gpufan"]
+        "modules": ["custom/cpufan", "custom/midfan", "custom/gpufan"],
+        "on-click": "asusctl profile -n"
     },
     "custom/cpufan": {
         "exec": "cat /sys/class/hwmon/hwmon5/fan1_input",
@@ -69,6 +107,12 @@
         "format": "{}󰈐 ",
         "tooltip": false
     },
+    "custom/power-profile": {
+        "exec": "asusctl profile -p | sed -n '2p' | sed s:'Active profile is '::",
+        "interval": 10,
+        "format": "{}",
+        "tooltip": false
+    },
 
     "memory": {
         "format": "{}%  "
@@ -79,31 +123,17 @@
     },
 
     // Right Modules
-    "mpd": {
-        "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
-        "format-disconnected": "Disconnected ",
-        "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
-        "unknown-tag": "N/A",
-        "interval": 5,
-        "consume-icons": {
-            "on": " "
+    "mpris": {
+        "format": "{player_icon} {title}",
+        "format-paused": "{status_icon} {title}",
+        "player-icons": {
+            "default": "",
+            "mpv": "🎵"
         },
-        "random-icons": {
-            "off": "<span color=\"#f53c3c\"></span> ",
-            "on": " "
+        "status-icons": {
+            "paused": ""
         },
-        "repeat-icons": {
-            "on": " "
-        },
-        "single-icons": {
-            "on": "1 "
-        },
-        "state-icons": {
-            "paused": "",
-            "playing": ""
-        },
-        "tooltip-format": "MPD (connected)",
-        "tooltip-format-disconnected": "MPD (disconnected)"
+        "max-length": 30
     },
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
@@ -187,7 +217,7 @@
     },
     "clock": {},
     "clock#date": {
-        "format": "{:%d %B %Y}",
+        "format": " {:%d %B %Y}",
         "tooltip-format": "<tt><small>{calendar}</small></tt>",
         "calendar": {
             "mode": "year",
