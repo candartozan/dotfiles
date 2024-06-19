@@ -1,0 +1,56 @@
+@import "color.css";
+
+window#waybar {
+    background-color: transparent;
+    color: black;
+    transition-property: background-color;
+    transition-duration: 0.5s;
+}
+
+#custom-archmenu,
+#gcpu,
+#fan,
+#memory,
+#disk,
+#network,
+#bluetooth,
+#pulseaudio,
+#backlight,
+#battery,
+#time,
+#tray,
+#workspaces {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border-radius: 5px;
+    margin: 0px 2px;
+    padding: 0px 5px;
+}
+
+#workspaces {
+    margin: 0px;
+    padding: 0px;
+}
+#workspaces button.active {
+    background-color: rgba(0, 0, 0, 0.91);
+    border-radius: 5px;
+}
+
+#custom-archmenu {
+    font-size: 20px;
+    color: red;
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 0px 14px 0px 10px;
+}
+#fan {
+    padding-right: 0px;
+}
+#disk {
+    padding-right: 7px;
+}
+#network {
+    padding-right: 10px;
+}
+#backlight {
+    padding-right: 8px;
+}

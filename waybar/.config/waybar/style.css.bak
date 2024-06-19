@@ -1,7 +1,9 @@
+@import "color.css";
+
 * {
     /* `otf-font-awesome` is required to be installed for icons */
-    font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;
-    font-size: 13px;
+    /* font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif; */
+    /* font-size: 13px; */
 }
 
 window#waybar {
@@ -9,7 +11,7 @@ window#waybar {
     border-bottom: 3px solid rgba(100, 114, 125, 0.5);
     color: #ffffff;
     transition-property: background-color;
-    transition-duration: .5s;
+    transition-duration: 0.5s;
 }
 
 window#waybar.hidden {
@@ -26,7 +28,7 @@ window#waybar.solo {
 */
 
 window#waybar.termite {
-    background-color: #3F3F3F;
+    background-color: #3f3f3f;
 }
 
 window#waybar.chromium {
@@ -63,8 +65,8 @@ button:hover {
     background: rgba(0, 0, 0, 0.2);
 }
 
-#workspaces button.focused {
-    background-color: #64727D;
+#workspaces button.active {
+    background-color: #64727d;
     box-shadow: inset 0 -3px #ffffff;
 }
 
@@ -73,7 +75,7 @@ button:hover {
 }
 
 #mode {
-    background-color: #64727D;
+    background-color: #64727d;
     box-shadow: inset 0 -3px #ffffff;
 }
 
@@ -113,8 +115,18 @@ button:hover {
     margin-right: 0;
 }
 
+#custom-archmenu {
+    font-size: 20px;
+    background-color: #66cc99;
+    color: #2a5c45;
+}
+
+#backlight {
+    background-color: #90b1b1;
+}
+
 #clock {
-    background-color: #64727D;
+    background-color: #64727d;
 }
 
 #battery {
@@ -122,9 +134,10 @@ button:hover {
     color: #000000;
 }
 
-#battery.charging, #battery.plugged {
+#battery.charging,
+#battery.plugged {
     color: #ffffff;
-    background-color: #26A65B;
+    background-color: #26a65b;
 }
 
 @keyframes blink {
@@ -178,11 +191,7 @@ label:focus {
 }
 
 #disk {
-    background-color: #964B00;
-}
-
-#backlight {
-    background-color: #90b1b1;
+    background-color: #964b00;
 }
 
 #network {
@@ -228,6 +237,7 @@ label:focus {
 
 #temperature {
     background-color: #f0932b;
+    background-color: @red;
 }
 
 #temperature.critical {
@@ -302,7 +312,7 @@ label:focus {
 }
 
 #scratchpad.empty {
-	background-color: transparent;
+    background-color: transparent;
 }
 
 #privacy {
