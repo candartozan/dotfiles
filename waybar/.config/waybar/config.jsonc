@@ -1,14 +1,22 @@
 {
     "layer": "top",
     "position": "top",
-    "height": 30, // Waybar height (to be removed for auto height)
+    // "height": 35, // Waybar height (to be removed for auto height)
     "margin-left": 10,
     "margin-right": 10,
-    "margin-top": 5,
+    // "margin-top": 5,
     // "width": 1280, // Waybar width
     // "spacing": 4, // Gaps between modules (4px)
-    // Choose the order of the modules
-    "modules-left": ["group/group-power", "group/gcpu", "group/group-fan", "memory", "disk"],
+    "modules-left": [
+        "custom/wlogout",
+        "group/gcpu",
+        "memory",
+        "disk",
+        "group/fan",
+        "custom/power-profile",
+        "custom/gpu-profile",
+        "custom/gamemode"
+    ],
     "modules-center": ["hyprland/workspaces"],
     "modules-right": [
         "mpris",
@@ -23,66 +31,36 @@
     ],
 
     // Left Modules
-    "group/group-power": {
-        "orientation": "horizontal",
-        "drawer": {
-            "transition-duration": 500,
-            "children-class": "not-power",
-            "transition-left-to-right": true
-        },
-        "modules": ["custom/archmenu", "custom/power", "custom/reboot", "custom/quit", "custom/lock"]
-    },
-    "custom/archmenu": {
-        "format": "󰣇",
-        "tooltip": false
-    },
-    "custom/quit": {
-        "format": " 󰈆 ",
+    "custom/wlogout": {
+        "format": "⏻",
         "tooltip": false,
-        "on-click": "hyprctl dispatch exit"
+        "on-click": "wlogout"
     },
-    "custom/lock": {
-        "format": "  ",
-        "tooltip": false,
-        "on-click": "hyprlock"
-    },
-    "custom/reboot": {
-        "format": "  ",
-        "tooltip": false,
-        "on-click": "systemctl reboot"
-    },
-    "custom/power": {
-        "format": "  ",
-        "tooltip": false,
-        "on-click": "systemctl poweroff"
-    },
-
     "group/gcpu": {
         "orientation": "horizontal",
         "modules": ["cpu", "temperature#cputemp"],
-        "on-click": "kitty htop"
+        "on-click": "kitty btop"
     },
     "cpu": {
-        "format": "{avg_frequency}GHz {usage}%  ",
-        "interval": 10,
+        // "format": "{avg_frequency}GHz⏽{usage}%  ",
+        "format": "{usage}%  ",
+        "interval": 5,
         "tooltip": false
     },
     "temperature#cputemp": {
         "hwmon-path": "/sys/class/hwmon/hwmon8/temp1_input",
         "critical-threshold": 80,
-        "format": "{temperatureC}°C",
+        "format": " {temperatureC}°C",
         "tooltip": false,
-        "interval": 10
+        "interval": 5
     },
 
-    "group/group-fan": {
-        "orientation": "horizontal",
-        "drawer": {
-            "transition-duration": 500,
-            "children-class": "not-power",
-            "transition-left-to-right": true
-        },
-        "modules": ["group/fan", "custom/power-profile"],
+    "memory": {
+        "format": "{}%  "
+    },
+    "disk": {
+        "interval": 30,
+        "format": "{percentage_used}% 󰋊"
     },
     "group/fan": {
         "orientation": "horizontal",
@@ -111,15 +89,33 @@
         "exec": "asusctl profile -p | sed -n '2p' | sed s:'Active profile is '::",
         "interval": 10,
         "format": "{}",
+        "tooltip": false,
+        "on-click": "asusctl profile -n; pkill -SIGRTMIN+8 waybar",
+        "signal": 8
+    },
+    "custom/gpu-profile": {
+        "exec": "supergfxctl -S",
+        "interval": 10,
+        "format": "{}",
         "tooltip": false
     },
-
-    "memory": {
-        "format": "{}%  "
+    "custom/gamemode": {
+        "format": " ",
+        "tooltip": false,
+        "on-click": "~/.config/hypr/gamemode.sh"
     },
-    "disk": {
-        "interval": 30,
-        "format": "{percentage_used}% 󰋊"
+
+    // Center Modules
+    "hyprland/workspaces": {
+        "on-scroll-up": "hyprctl dispatch workspace r-1",
+        "on-scroll-down": "hyprctl dispatch workspace r+1",
+        "on-click": "activate",
+        "format": "{icon}",
+        "format-icons": {
+            "urgent": "",
+            "active": "",
+            "default": ""
+        },
     },
 
     // Right Modules
@@ -133,21 +129,22 @@
         "status-icons": {
             "paused": ""
         },
-        "max-length": 30
+        "max-length": 40
     },
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "format-wifi": "{essid} {icon}",
+        "format-wifi": "{signalStrength}%  ",
         "format-ethernet": "{ipaddr}/{cidr} 󰈀",
-        "tooltip-format": "{ifname} via {gwaddr} ",
+        "tooltip-format": "{essid} ",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "Disconnected ⚠",
-        "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
         "on-click": "kitty nmtui"
     },
     "bluetooth": {
-        "format": " {status}",
+        "format": "",
         "format-connected": " {device_alias}",
+        "format-disabled": "󰂲",
+        "format-off": "󰂲",
         "format-connected-battery": " {device_alias} {device_battery_percentage}%",
         // "format-device-preference": [ "device1", "device2" ], // preference list deciding the displayed device
         "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
@@ -162,9 +159,9 @@
         "modules": ["pulseaudio", "pulseaudio#mic"]
     },
     "pulseaudio": {
-        "format": "{icon} {volume}%",
+        "format": "{volume}% {icon} ",
         "tooltip": false,
-        "format-muted": " Muted",
+        "format-muted": " ",
         "on-click-right": "pavucontrol",
         "on-click": "pamixer -t",
         "on-scroll-up": "pamixer -i 5",
@@ -182,8 +179,9 @@
     },
     "pulseaudio#mic": {
         "format": "{format_source}",
-        "format-source": " {volume}%",
-        "format-source-muted": " Muted",
+        "format-source": "{volume}% ",
+        "format-source-muted": " ",
+        "tooltip": false,
         "on-click-right": "pavucontrol",
         "on-click": "pamixer --default-source -t",
         "on-scroll-up": "pamixer --default-source -i 5",
@@ -193,6 +191,7 @@
 
     "backlight": {
         // "device": "acpi_video1",
+        "tooltip": false,
         "format": "{percent}% {icon}",
         "format-icons": ["", "", "", "", "", "", "", "", ""]
     },
@@ -203,21 +202,26 @@
         },
         "format": "{capacity}% {icon}",
         "format-full": "{capacity}% {icon}",
-        "format-charging": "{capacity}% ",
+        "format-charging": "{capacity}% 󱐋",
         "format-plugged": "{capacity}% ",
         "format-alt": "{time} {icon}",
         // "format-good": "", // An empty format will hide the module
         // "format-full": "",
-        "format-icons": ["", "", "", "", ""]
+        "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+        "tooltip": true
     },
 
     "group/time": {
         "orientation": "horizontal",
         "modules": ["clock", "clock#date"]
     },
-    "clock": {},
+    "clock": {
+        "interval": 60,
+        "tooltip": false,
+        "format": "{:%H:%M}  "
+    },
     "clock#date": {
-        "format": " {:%d %B %Y}",
+        "format": " {:%d %B %Y} 󰃭 ",
         "tooltip-format": "<tt><small>{calendar}</small></tt>",
         "calendar": {
             "mode": "year",
