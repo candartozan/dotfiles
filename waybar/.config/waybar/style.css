@@ -74,14 +74,16 @@ window#waybar {
 #custom-power-profile,
 #custom-gpu-profile,
 #tray,
-#custom-gamemode {
+#custom-gamemode,
+#custom-notification {
     border-radius: 10px;
     margin: 4px 4px 6px 4px;
 }
 
 #custom-wlogout {
+    font-size: 19;
     background-color: @love;
-    padding: 3px 10px 3px 5px;
+    padding: 0px 10px 0px 5px;
     margin-left: 10px;
 }
 
@@ -175,37 +177,17 @@ window#waybar {
     color: @base;
     background-color: @highlightHigh;
     padding: 3px 5px 3px 5px;
-    margin-right: 10px;
 }
 #custom-gamemode {
     font-size: 19;
     background-color: @love;
     padding: 0px 3px 0px 5px;
 }
+#custom-notification {
+    color: @gold;
+    background-color: @pine;
+    font-size: 19;
+    padding: 0px 8px 0px 5px;
+    margin-right: 10px;
+}
 
-#group-power {
-    padding: 0px;
-}
-#power {
-    margin: 0px 10px;
-    padding: 0px 10px;
-}
-#quit,
-#lock,
-#reboot {
-    padding: 0px 5px;
-    margin: 0px 5px;
-}
-#custom-archmenu {
-    /* font-size: 20px; */
-    /* color: red; */
-    /* background-color: rgba(0, 0, 0, 0.9); */
-    padding: 0px 14px 0px 10px;
-    margin: 0px;
-}
-#fan {
-    padding-right: 0px;
-}
-#disk {
-    padding-right: 7px;
-}
