@@ -14,11 +14,12 @@
     },
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "format-wifi": "{signalStrength}%  ",
+        "format-wifi": "{icon}",
         "format-ethernet": "{ipaddr}/{cidr} 󰈀",
-        "tooltip-format": "{essid} ",
+        "tooltip-format": "{essid} {signalStrength}%",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "Disconnected ⚠",
+        "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
         "on-click": "kitty nmtui"
     },
     "bluetooth": {
@@ -40,7 +41,7 @@
         "modules": ["pulseaudio", "pulseaudio#mic"]
     },
     "pulseaudio": {
-        "format": "{volume}% {icon} ",
+        "format": "{volume}% {icon}",
         "tooltip": false,
         "format-muted": " ",
         "on-click-right": "pavucontrol",
@@ -72,9 +73,10 @@
 
     "backlight": {
         // "device": "acpi_video1",
-        "tooltip": false,
-        "format": "{percent}% {icon}",
-        "format-icons": ["", "", "", "", "", "", "", "", ""]
+        "tooltip": true,
+        "format": "{icon}",
+        "format-icons": ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+        "tooltip-format": "{percent}%"
     },
     "battery": {
         "states": {
@@ -94,16 +96,22 @@
 
     "group/time": {
         "orientation": "horizontal",
-        "modules": ["clock", "clock#date"]
+        "modules": ["clock", "custom/seperator", "clock#date"]
     },
     "clock": {
         "interval": 60,
         "tooltip": false,
-        "format": "{:%H:%M}  "
+        "format": "{:%H:%M}",
+        "on-click": "gnome-clocks"
+    },
+    "custom/seperator": {
+        "format": " ",
+        "tooltip": false
     },
     "clock#date": {
-        "format": " {:%d %B %Y} 󰃭 ",
+        "format": "{:%d/%m/%Y}",
         "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "on-click": "gnome-calendar",
         "calendar": {
             "mode": "year",
             "mode-mon-col": 3,

@@ -1,4 +1,4 @@
-@import "rose-pine.css";
+@import "color.css";
 
 @keyframes blink-critical {
     to {
@@ -19,12 +19,12 @@
 }
 
 window#waybar {
-    font-size: 14px;
-    color: @text;
-    background-color: @surface;
+    font-size: 13px;
+    color: @foreground;
+    background-color: @backgound-darker;
     transition-property: background-color;
     transition-duration: 0.5s;
-    border: 2px solid @rose;
+    border: 2px solid @purple;
     border-top: none;
     border-radius: 0px 0px 10px 10px;
 }
@@ -33,26 +33,28 @@ window#waybar {
     margin: 4px 4px 6px 4px;
 }
 #workspaces button {
-    color: @text;
+    color: @foreground;
+    background-color: @selection;
     border-radius: 15px;
-    padding: 3px 4px 3px 0px;
     transition: background-color 0.3s, color 0.3s;
+    padding: 3px 3px 3px 3px;
+    margin: 0px 2px 0px 2px;
 }
 #workspaces button.active {
-    color: @text;
-    background-color: @pine;
-    padding: 3px 6px 3px 0px;
+    color: @background;
+    background-color: @green;
+    padding: 3px 10px 3px 10px;
+    margin: 0px 4px 0px 4px;
 }
 
 #workspaces button:not(.active):hover {
     color: @base;
-    background-color: @rose;
+    background-color: @backgound;
 }
 
 #workspaces button.urgent {
-    color: @text;
-    background-color: @love;
-    padding: 3px 6px 3px 0px;
+    color: @background;
+    background-color: @orange;
 }
 
 #custom-wlogout,
@@ -78,116 +80,114 @@ window#waybar {
 #custom-notification {
     border-radius: 10px;
     margin: 4px 4px 6px 4px;
+    padding: 3px 5px 3px 5px;
 }
 
 #custom-wlogout {
-    font-size: 19;
-    background-color: @love;
-    padding: 0px 10px 0px 5px;
+    background-color: @red;
     margin-left: 10px;
+    font-size: 16px;
+    padding: 0px 5px 0px 5px;
 }
 
 #bluetooth {
-    font-size: 19;
-    background-color: @pine;
+    color: @background-darker;
+    background-color: @cyan;
+    font-size: 16px;
     padding: 0px 5px 0px 5px;
 }
 
 #battery {
-    color: @base;
-    background-color: @foam;
-    padding: 3px 5px 3px 5px;
+    color: @background-darker;
+    background-color: @green;
 }
 
 #backlight {
-    color: @base;
-    background-color: @gold;
+    color: @background-darker;
+    background-color: @yellow;
     padding: 3px 5px 3px 5px;
+    font-size: 16px;
+    padding: 0px 5px 0px 5px;
 }
 
 #pulseaudio {
-    color: @base;
-    background-color: @iris;
-    padding: 3px 5px 3px 5px;
+    color: @background;
+    background-color: @pink;
     margin-right: 0px;
     border-radius: 10px 0px 0px 10px;
 }
 #pulseaudio.mic {
-    background-color: @rose;
     margin-left: 0px;
     margin-right: 4px;
     border-radius: 0px 10px 10px 0px;
 }
 
 #network {
-    color: @base;
-    background-color: @foam;
-    /* font-size: 19; */
-    padding: 3px 5px 3px 5px;
+    color: @background-darker;
+    background-color: @green;
+    font-size: 16px;
+    padding: 0px 5px 0px 5px;
 }
 
 #mpris {
-    background-color: @highlightHigh;
-    padding: 3px 5px 3px 5px;
+    background-color: @selection;
 }
 
 #time {
     color: @base;
-    background-color: @text;
-    padding: 3px 5px 3px 5px;
+    background-color: @comment;
 }
 
 #gcpu {
-    color: @base;
-    background-color: @foam;
-    padding: 3px 5px 3px 5px;
+    color: @background;
+    background-color: @cyan;
 }
 
 #memory {
-    color: @base;
-    background-color: @iris;
-    padding: 3px 5px 3px 5px;
+    color: @background;
+    background-color: @purple;
 }
 
 #disk {
-    color: @base;
-    background-color: @gold;
-    padding: 3px 5px 3px 5px;
+    color: @background;
+    background-color: @orange;
 }
 
 #fan {
-    color: @text;
-    background-color: @pine;
-    padding: 3px 5px 3px 5px;
+    color: @foreground;
+    background-color: @comment;
 }
 
 #custom-power-profile {
-    color: @base;
-    background-color: @rose;
-    padding: 3px 5px 3px 5px;
+    color: @background;
+    background-color: @green;
 }
 
 #custom-gpu-profile {
-    color: @base;
-    background-color: @iris;
-    padding: 3px 5px 3px 5px;
+    color: @background;
+    background-color: @pink;
 }
 
 #tray {
-    color: @base;
-    background-color: @highlightHigh;
-    padding: 3px 5px 3px 5px;
+    background-color: @selection;
 }
 #custom-gamemode {
-    font-size: 19;
-    background-color: @love;
-    padding: 0px 3px 0px 5px;
+    background-color: @red;
+    font-size: 16px;
+    padding: 0px 5px 0px 5px;
 }
 #custom-notification {
-    color: @gold;
-    background-color: @pine;
-    font-size: 19;
-    padding: 0px 8px 0px 5px;
+    color: @yellow;
+    background-color: @comment;
     margin-right: 10px;
+    font-size: 16px;
+    padding: 0px 5px 0px 5px;
+}
+#clock {
+    margin-right: 3px;
 }
 
+#clock.date {
+    margin-left: 3px;
+    margin-right: 0px;
+}
